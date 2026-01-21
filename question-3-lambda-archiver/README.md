@@ -12,14 +12,14 @@ Automated Lambda function that archives items older than 30 days from DynamoDB t
 
 ## Features
 
-- ✅ Automated daily archival process
-- ✅ Configurable retention period (default: 30 days)
-- ✅ Batch processing for efficiency
-- ✅ Error handling and retry logic
-- ✅ Detailed logging and statistics
-- ✅ S3 lifecycle policies (Glacier transition after 90 days)
-- ✅ Encrypted storage (AES-256)
-- ✅ Versioning enabled for data safety
+-  Automated daily archival process
+-  Configurable retention period (default: 30 days)
+-  Batch processing for efficiency
+-  Error handling and retry logic
+-  Detailed logging and statistics
+-  S3 lifecycle policies (Glacier transition after 90 days)
+-  Encrypted storage (AES-256)
+-  Versioning enabled for data safety
 
 ## Prerequisites
 
@@ -933,14 +933,14 @@ CREATE TABLE workload_aggregations (
 ```php
 <?php
 
-// In your application middleware
+// In the application middleware
 $workloadModel = new WorkloadCharacterizationModel($db, $cache, $logger);
 
 // Capture metrics for each request
 $startTime = microtime(true);
 $startMemory = memory_get_usage(true);
 
-// ... process request ...
+//process request
 
 $context = [
     'request_id' => $_SERVER['REQUEST_ID'] ?? uniqid(),

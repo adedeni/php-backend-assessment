@@ -297,7 +297,6 @@ phpunit tests/
 
 ## Author
 
-**[Your Name]**
 - GitHub: [@adedeni](https://github.com/adedeni)
 
 ---
