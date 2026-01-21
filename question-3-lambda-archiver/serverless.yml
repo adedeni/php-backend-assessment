@@ -40,12 +40,12 @@ provider:
 functions:
   archiveOldItems:
     handler: src/index.handler
-    timeout: 900
+    timeout: 900  # 15 minutes
     memorySize: 1024
-    reservedConcurrency: 1
+    reservedConcurrency: 1  # Prevent concurrent executions
     events:
       - schedule:
-          rate: cron(0 2 * * ? *)
+          rate: cron(0 2 * * ? *)  # Run daily at 2 AM UTC
           enabled: true
           description: 'Archive items older than 30 days'
 
@@ -62,6 +62,8 @@ resources:
         KeySchema:
           - AttributeName: itemId
             KeyType: HASH
+        TimeToLiveSpecification:
+          Enabled: false
         Tags:
           - Key: Environment
             Value: ${self:provider.stage}
@@ -81,7 +83,7 @@ resources:
                   TransitionInDays: 90
             - Id: ExpireOldArchives
               Status: Enabled
-              ExpirationInDays: 2555
+              ExpirationInDays: 2555  # 7 years
         PublicAccessBlockConfiguration:
           BlockPublicAcls: true
           BlockPublicPolicy: true
@@ -94,6 +96,21 @@ resources:
         Tags:
           - Key: Environment
             Value: ${self:provider.stage}
+    
+    ArchiveBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref ArchiveBucket
+        PolicyDocument:
+          Statement:
+            - Sid: DenyUnencryptedObjectUploads
+              Effect: Deny
+              Principal: '*'
+              Action: s3:PutObject
+              Resource: !Join ['', [!GetAtt ArchiveBucket.Arn, '/*']]
+              Condition:
+                StringNotEquals:
+                  's3:x-amz-server-side-encryption': 'AES256'
 
 plugins:
   - serverless-offline

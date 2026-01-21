@@ -1,17 +1,5 @@
 # Question 1: Standardized Workload Characterization Model
 
-## Overview
-
-A comprehensive workload characterization model for monitoring and analyzing platform performance as the system scales.
-
-## Features
-
-- ✅ Multi-dimensional metrics capture
-- ✅ Real-time aggregation
-- ✅ Workload classification
-- ✅ Anomaly detection
-- ✅ Forecasting capabilities
-
 ## Installation
 ```bash
 # Install dependencies (example for Laravel/Symfony)
@@ -28,10 +16,6 @@ cp .env.example .env
 
 See `examples/usage-example.php` for implementation details.
 
-## Documentation
-
-- [Architecture Overview](docs/ARCHITECTURE.md)
-- [API Reference](docs/API.md)
 
 ## Database Schema
 

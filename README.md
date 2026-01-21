@@ -2,40 +2,47 @@
 
 This repository contains comprehensive solutions for a PHP Senior Backend Developer technical assessment, demonstrating expertise in system design, AWS serverless architecture, and backend engineering best practices.
 
+---
+
 ## Table of Contents
 
 - [Overview](#overview)
-- [Questions & Solutions](#questions--solutions)
+- [Questions and Solutions](#questions-and-solutions)
 - [Technologies Used](#technologies-used)
 - [Repository Structure](#repository-structure)
 - [Getting Started](#getting-started)
 - [Author](#author)
 
+---
+
 ## Overview
 
 This assessment consists of three technical challenges covering different aspects of backend development:
 
-1. **Workload Characterization Model** - System performance monitoring and analysis
-2. **Serverless CRUD API** - AWS Lambda, API Gateway, and DynamoDB implementation
-3. **Scheduled Data Archiving** - Automated data lifecycle management with Lambda
+1. **Workload Characterization Model** - System performance monitoring and analysis.
+2. **Serverless CRUD API** - AWS Lambda, API Gateway, and DynamoDB implementation.
+3. **Scheduled Data Archiving** - Automated data lifecycle management with Lambda.
 
 Each solution is production-ready with comprehensive documentation, error handling, and following industry best practices.
 
-## Questions & Solutions
+---
+
+## Questions and Solutions
 
 ### Question 1: Workload Characterization Model
 
 **Challenge:** Implement a standardized workload characterization model for a rapidly growing platform with increasing users and data.
 
 **Solution Highlights:**
-- ✅ Multi-dimensional metrics capture (arrival patterns, resource consumption, response characteristics)
-- ✅ Real-time workload aggregation with caching
-- ✅ Workload classification system (read-intensive, write-intensive, analytical, batch)
-- ✅ Anomaly detection with statistical analysis
-- ✅ Forecasting capabilities for capacity planning
-- ✅ Scalable database schema with partitioning
+- Multi-dimensional metrics capture (arrival patterns, resource consumption, response characteristics).
+- Real-time workload aggregation with caching.
+- Workload classification using the **R.E.D. Method** (Rate, Errors, Duration).
+- Statistical analysis using the **Coefficient of Variation** to identify burstiness:
+  $$CV = \frac{\sigma}{\mu}$$
+  where $\sigma$ is the standard deviation and $\mu$ is the mean.
+- Scalable database schema with partitioning for high-volume metric storage.
 
-**[View Solution](./question-1-workload-characterization/)**
+
 
 ---
 
@@ -44,14 +51,13 @@ Each solution is production-ready with comprehensive documentation, error handli
 **Challenge:** Build a REST API with AWS Lambda, API Gateway, and DynamoDB supporting full CRUD operations.
 
 **Solution Highlights:**
-- ✅ Complete REST API (POST, GET, PUT, DELETE)
-- ✅ Comprehensive input validation (UUID v4, length constraints)
-- ✅ Robust error handling with proper HTTP status codes
-- ✅ Infrastructure as Code with Serverless Framework
-- ✅ Production-ready features (CORS, versioning, optimistic locking)
-- ✅ Detailed testing documentation
+- Complete REST API (POST, GET, PUT, DELETE).
+- Comprehensive input validation (UUID v4, length constraints).
+- Robust error handling with proper HTTP status codes.
+- Infrastructure as Code (IaC) using the Serverless Framework.
+- Production-ready features including CORS, versioning, and optimistic locking.
 
-**[��� View Solution](./question-2-serverless-crud-api/)**
+
 
 ---
 
@@ -60,48 +66,42 @@ Each solution is production-ready with comprehensive documentation, error handli
 **Challenge:** Create a Lambda function that archives items older than 30 days from DynamoDB to S3 with daily scheduling.
 
 **Solution Highlights:**
-- ✅ Automated daily archival process
-- ✅ Batch processing for efficiency (configurable batch size)
-- ✅ Error handling with exponential backoff retry logic
-- ✅ S3 lifecycle policies (Glacier transition, 7-year retention)
-- ✅ Comprehensive monitoring and logging
-- ✅ Security best practices (encryption, IAM least privilege)
+- Automated daily archival process triggered via Amazon EventBridge.
+- Batch processing for efficiency and cost reduction.
+- Error handling with exponential backoff retry logic.
+- S3 lifecycle policies for cost-effective long-term storage (Glacier transition).
+- Security best practices including IAM least privilege and encryption at rest.
 
-**[��� View Solution](./question-3-lambda-archiver/)**
+
 
 ---
 
-## ��� Technologies Used
+## Technologies Used
 
-### Backend & Languages
-- **PHP 8.x** - Workload characterization implementation
-- **Node.js 18.x** - AWS Lambda functions
-- **JavaScript/ES6+** - Serverless application logic
+### Backend and Languages
+- **PHP 8.x** - Core workload characterization logic.
+- **Node.js 18.x** - AWS Lambda functions.
+- **JavaScript/ES6+** - Serverless application logic.
 
 ### AWS Services
-- **AWS Lambda** - Serverless compute
-- **API Gateway** - RESTful API endpoints
-- **DynamoDB** - NoSQL database
-- **S3** - Archive storage
-- **CloudWatch** - Monitoring and scheduling
-- **IAM** - Security and permissions
+- **AWS Lambda** - Serverless compute.
+- **API Gateway** - RESTful API endpoints.
+- **DynamoDB** - NoSQL database.
+- **S3** - Archive storage.
+- **CloudWatch** - Monitoring and scheduling.
+- **IAM** - Security and permissions.
 
-### Frameworks & Tools
-- **Serverless Framework** - Infrastructure as Code
-- **AWS SDK v3** - AWS service integration
-- **MySQL/PostgreSQL** - Relational database for metrics
-- **Redis/Memcached** - Caching layer
-
-### Development Tools
-- **Git** - Version control
-- **npm** - Package management
-- **Jest** - Testing framework
-- **ESLint** - Code linting
+### Frameworks and Tools
+- **Serverless Framework** - Infrastructure as Code.
+- **AWS SDK v3** - AWS service integration.
+- **MySQL/PostgreSQL** - Relational database for metrics.
+- **Redis/Memcached** - Caching layer.
 
 ---
 
-## ��� Repository Structure
----
+## Repository Structure
+
+```text
 php-backend-assessment/
 ├── README.md                                    # This file
 ├── .gitignore                                   # Git ignore rules
@@ -149,11 +149,11 @@ php-backend-assessment/
 │       └── restore-from-archive.js              # Restoration utility
 │
 └── docs/                                        # Additional documentation
-├── DEPLOYMENT.md                            # Deployment guide
-├── TESTING.md                               # Testing guide
-└── diagrams/                                # Architecture diagrams
+    ├── DEPLOYMENT.md                            # Deployment guide
+    ├── TESTING.md                               # Testing guide
+    └── diagrams/                                # Architecture diagrams
 
-## ��� Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -207,29 +207,29 @@ Each solution directory contains a comprehensive README.md with:
 ## ��� Key Features & Highlights
 
 ### Production-Ready Code
-- ✅ Comprehensive error handling
-- ✅ Input validation and sanitization
-- ✅ Detailed logging and monitoring
-- ✅ Security best practices
-- ✅ Performance optimization
+-  Comprehensive error handling
+-  Input validation and sanitization
+-  Detailed logging and monitoring
+-  Security best practices
+-  Performance optimization
 
 ### Professional Documentation
-- ✅ Clear architecture explanations
-- ✅ Step-by-step setup guides
-- ✅ API documentation with examples
-- ✅ Design assumptions clearly stated
-- ✅ Troubleshooting guides
+-  Clear architecture explanations
+-  Step-by-step setup guides
+-  API documentation with examples
+-  Design assumptions clearly stated
+-  Troubleshooting guides
 
 ### Best Practices
-- ✅ Infrastructure as Code (IaC)
-- ✅ Environment-specific deployments
-- ✅ Automated testing setup
-- ✅ Cost optimization strategies
-- ✅ Scalability considerations
+-  Infrastructure as Code (IaC)
+-  Environment-specific deployments
+-  Automated testing setup
+-  Cost optimization strategies
+-  Scalability considerations
 
 ---
 
-## ��� Security Considerations
+## Security Considerations
 
 All solutions implement security best practices:
 - Encryption at rest and in transit
@@ -240,7 +240,7 @@ All solutions implement security best practices:
 
 ---
 
-## ��� Cost Estimation
+## Cost Estimation
 
 Detailed cost breakdowns provided for each solution:
 - **Question 2 CRUD API**: ~$5-10/month for 1M requests
@@ -248,7 +248,7 @@ Detailed cost breakdowns provided for each solution:
 
 ---
 
-## ��� Performance Metrics
+## Performance Metrics
 
 ### Workload Characterization (Q1)
 - Real-time metrics aggregation (1-minute windows)
@@ -267,7 +267,7 @@ Detailed cost breakdowns provided for each solution:
 
 ---
 
-## ��� Testing
+## Testing
 
 Each solution includes:
 - Unit tests for core functionality
@@ -286,7 +286,7 @@ phpunit tests/
 
 ---
 
-## ��� Additional Resources
+## Additional Resources
 
 - [AWS Lambda Best Practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
 - [DynamoDB Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
@@ -295,36 +295,9 @@ phpunit tests/
 
 ---
 
-## ��� Author
+## Author
 
 **[Your Name]**
-- GitHub: [@your-username](https://github.com/your-username)
-- LinkedIn: [your-linkedin](https://linkedin.com/in/your-profile)
-- Email: your.email@example.com
+- GitHub: [@adedeni](https://github.com/adedeni)
 
 ---
-
-## ��� License
-
-This project is created for assessment purposes. All rights reserved.
-
----
-
-## ��� Acknowledgments
-
-This assessment demonstrates professional backend development practices including:
-- System design and architecture
-- Cloud-native application development
-- Infrastructure as Code
-- Production engineering best practices
-- Comprehensive documentation
-
----
-
-**Assessment Completed:** January 2026  
-**Total Development Time:** [Your estimate]  
-**Lines of Code:** ~2,500+ (across all solutions)
-
----
-
-For questions or clarifications, please open an issue or contact me directly.

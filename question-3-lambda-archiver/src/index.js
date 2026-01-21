@@ -1,7 +1,11 @@
 const DataArchiver = require('./archiver');
 
 exports.handler = async (event, context) => {
-  console.log('Lambda function invoked');
+  console.log('Lambda function invoked', {
+    requestId: context.requestId,
+    event,
+  });
+
   const archiver = new DataArchiver();
 
   try {
@@ -14,6 +18,7 @@ exports.handler = async (event, context) => {
         result,
       }),
     };
+
   } catch (error) {
     console.error('Archival process failed:', error);
     
