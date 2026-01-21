@@ -1,0 +1,99 @@
+service: dynamodb-archiver
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+  
+  environment:
+    SOURCE_TABLE: ${self:service}-items-${self:provider.stage}
+    ARCHIVE_BUCKET: ${self:service}-archive-${self:provider.stage}
+    ARCHIVE_DAYS: 30
+    BATCH_SIZE: 100
+    REGION: ${self:provider.region}
+  
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Scan
+            - dynamodb:DeleteItem
+            - dynamodb:BatchWriteItem
+          Resource:
+            - !GetAtt SourceTable.Arn
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:PutObjectAcl
+          Resource:
+            - !GetAtt ArchiveBucket.Arn
+            - !Join ['', [!GetAtt ArchiveBucket.Arn, '/*']]
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: '*'
+
+functions:
+  archiveOldItems:
+    handler: src/index.handler
+    timeout: 900
+    memorySize: 1024
+    reservedConcurrency: 1
+    events:
+      - schedule:
+          rate: cron(0 2 * * ? *)
+          enabled: true
+          description: 'Archive items older than 30 days'
+
+resources:
+  Resources:
+    SourceTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.SOURCE_TABLE}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: itemId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: itemId
+            KeyType: HASH
+        Tags:
+          - Key: Environment
+            Value: ${self:provider.stage}
+    
+    ArchiveBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.ARCHIVE_BUCKET}
+        VersioningConfiguration:
+          Status: Enabled
+        LifecycleConfiguration:
+          Rules:
+            - Id: TransitionToGlacier
+              Status: Enabled
+              Transitions:
+                - StorageClass: GLACIER
+                  TransitionInDays: 90
+            - Id: ExpireOldArchives
+              Status: Enabled
+              ExpirationInDays: 2555
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        Tags:
+          - Key: Environment
+            Value: ${self:provider.stage}
+
+plugins:
+  - serverless-offline
