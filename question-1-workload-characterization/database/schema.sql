@@ -1,0 +1,1 @@
+-- [Copy the SQL schema from the artifact here]

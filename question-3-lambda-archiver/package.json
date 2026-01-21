@@ -1,0 +1,23 @@
+{
+  "name": "dynamodb-archiver",
+  "version": "1.0.0",
+  "description": "Lambda function for archiving old DynamoDB items to S3",
+  "main": "src/index.js",
+  "scripts": {
+    "deploy": "serverless deploy",
+    "remove": "serverless remove",
+    "logs": "serverless logs -f archiveOldItems --tail",
+    "invoke": "serverless invoke -f archiveOldItems",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.470.0",
+    "@aws-sdk/client-s3": "^3.470.0",
+    "@aws-sdk/lib-dynamodb": "^3.470.0",
+    "@aws-sdk/util-dynamodb": "^3.470.0"
+  },
+  "devDependencies": {
+    "serverless": "^3.38.0",
+    "jest": "^29.7.0"
+  }
+}
